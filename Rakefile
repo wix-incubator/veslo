@@ -15,7 +15,7 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "veslo"
-  gem.homepage = "http://github.com/labria/veslo"
+  gem.homepage = "http://github.com/Wixpress/veslo"
   gem.license = "MIT"
   gem.summary = %Q{Command line Noah client}
   gem.description = %Q{Command line utility to manage Noah configurations}
