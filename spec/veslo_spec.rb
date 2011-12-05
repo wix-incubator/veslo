@@ -1,6 +1,20 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'fakeweb'
+require 'stringio'
 
-describe "Veslo" do
+def capture(*streams)
+  streams.map! { |stream| stream.to_s }
+  begin
+    result = StringIO.new
+    streams.each { |stream| eval "$#{stream} = result" }
+    yield
+  ensure
+    streams.each { |stream| eval("$#{stream} = #{stream.upcase}") }
+  end
+  result.string
+end
+
+describe "Veslo", "parsing arguments" do
   before :each do
     @veslo = Veslo.new
   end
@@ -23,5 +37,43 @@ describe "Veslo" do
 
   it "should not accept unknown resources" do
     lambda{@veslo.parse_commands(["foobars", "get", "baz"])}.should raise_error(NotImplementedError)
+  end
+end
+
+describe "Veslo", "interacting with server" do
+  before :all do
+    @veslo = Veslo.new
+    @base_argv = ["-s", "http://example.com", "configurations"]
+    @get_existing_argv = @base_argv + ["get", "existing"]
+    @get_missing_argv = @base_argv + ["get", "missing"]
+    @get_error_argv = @base_argv + ["get", "error"]
+
+    FakeWeb.allow_net_connect = false
+    FakeWeb.register_uri(:get, "http://example.com/configurations/existing", :body => "Hello World!")
+    FakeWeb.register_uri(:get, "http://example.com/configurations/missing", :body => "Nothing to be found 'round here", :status => ["404", "Not Found"])
+    FakeWeb.register_uri(:get, "http://example.com/configurations/error", :body => "Internal Server Error", :status => ["500", "Internal Server Error"])
+
+    FakeWeb.register_uri(:put, "http://example.com/configurations/creating", :body => "Hello World!")
+  end
+
+  it "should get an existing configuration" do
+    @output = capture(:stdout) do
+      @veslo.run!(*@get_existing_argv)
+    end
+    @output.should == "Hello World!\n"
+  end
+
+  it "should tell if a configuration was not found" do
+    @output = capture(:stderr) do
+      @veslo.run!(*@get_missing_argv)
+    end
+    @output.should == "Requested resource not found\n"
+  end
+
+  it "should tell what happened in case of failure" do
+    @output = capture(:stderr) do
+      @veslo.run!(*@get_error_argv)
+    end
+    @output.should == "Request failed with status: 500\n"
   end
 end

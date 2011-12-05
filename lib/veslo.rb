@@ -17,7 +17,6 @@ class Veslo
     @server = RestClient::Resource.new(config[:server_url], :headers => {:accept => "application/octet"})
     parse_commands(argv)
     execute
-    return 0
   end
 
   def parse_commands(commands)
@@ -34,7 +33,19 @@ class Veslo
   end
 
   def execute
-    result = @server["#{@resource}/#{@name}"].get()
-    puts result.to_str
+    begin
+      result = @server["#{@resource}/#{@name}"].get
+      $stdout.puts result.to_str
+      return 0
+    rescue RestClient::ExceptionWithResponse => e
+      case e.response.code
+      when 404
+        $stderr.puts("Requested resource not found")
+        return 1
+      else
+        $stderr.puts("Request failed with status: #{e.response.code}")
+        return 2
+      end
+    end
   end
 end
