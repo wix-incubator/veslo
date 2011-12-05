@@ -17,10 +17,11 @@ Jeweler::Tasks.new do |gem|
   gem.name = "veslo"
   gem.homepage = "http://github.com/labria/veslo"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Command line Noah client}
+  gem.description = %Q{Command line utility to manage Noah configurations}
   gem.email = "dimitri@wix.com"
   gem.authors = ["Dimitri Krassovski"]
+  gem.executables << 'veslo'
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
