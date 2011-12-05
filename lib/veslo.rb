@@ -10,11 +10,10 @@ class Veslo
   option :server_url,
     :short => "-s SERVER",
     :long  => "--server SERVER",
-    :description => "The Noah server to work against",
-    :required => true
+    :description => "The Noah server to work against"
 
   def run!(*arguments)
-    argv = parse_options
+    argv = parse_options(arguments)
     @server = RestClient::Resource.new(config[:server_url], :headers => {:accept => "application/octet"})
     parse_commands(argv)
     execute
