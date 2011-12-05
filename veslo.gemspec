@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "veslo"
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dimitri Krassovski"]
@@ -29,7 +29,8 @@ Gem::Specification.new do |s|
     "bin/veslo",
     "lib/veslo.rb",
     "spec/spec_helper.rb",
-    "spec/veslo_spec.rb"
+    "spec/veslo_spec.rb",
+    "veslo.gemspec"
   ]
   s.homepage = "http://github.com/Wixpress/veslo"
   s.licenses = ["MIT"]
