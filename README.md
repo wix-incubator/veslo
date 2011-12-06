@@ -12,7 +12,7 @@ The default output is to STDOUT, so you can pipe it wherever you want, for examp
 
     veslo configurations get config.yml > current_production_config.yml
 
-The put command accepts two arguments: the config name on the server and the local config file to upload (or STDIN) _TODO_
+The put command accepts two arguments: the config name on the server and the local config file to upload (or STDIN _TODO_)
 
     veslo configurations put config.yml my_new_config.yml
 
