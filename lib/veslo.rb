@@ -4,8 +4,8 @@ require 'rest_client'
 
 class Veslo
   include Mixlib::CLI
-  Veslo::SUPPORTED_METHODS = ["put", "get"]
-  Veslo::SUPPORTED_RESOURCES = ["configurations"]
+  SUPPORTED_METHODS = ["put", "get"]
+  SUPPORTED_RESOURCES = ["configurations"]
 
   option :server_url,
     :short => "-s SERVER",
@@ -33,19 +33,17 @@ class Veslo
   end
 
   def execute
-    begin
-      result = @server["#{@resource}/#{@name}"].get
-      $stdout.puts result.to_str
-      return 0
-    rescue RestClient::ExceptionWithResponse => e
-      case e.response.code
-      when 404
-        $stderr.puts("Requested resource not found")
-        return 1
-      else
-        $stderr.puts("Request failed with status: #{e.response.code}")
-        return 2
-      end
+    result = @server["#{@resource}/#{@name}"].get
+    $stdout.puts result.to_str
+    return 0
+  rescue RestClient::ExceptionWithResponse => e
+    case e.response.code
+    when 404
+      $stderr.puts("Requested resource not found")
+      return 1
+    else
+      $stderr.puts("Request failed with status: #{e.response.code}")
+      return 2
     end
   end
 end
