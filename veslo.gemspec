@@ -5,17 +5,18 @@
 
 Gem::Specification.new do |s|
   s.name = "veslo"
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dimitri Krassovski"]
-  s.date = "2011-12-05"
+  s.date = "2011-12-06"
   s.description = "Command line utility to manage Noah configurations"
   s.email = "dimitri@wix.com"
   s.executables = ["veslo", "veslo"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md",
+    "TODO"
   ]
   s.files = [
     ".document",
@@ -23,11 +24,13 @@ Gem::Specification.new do |s|
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
+    "TODO",
     "VERSION",
     "bin/veslo",
     "lib/veslo.rb",
+    "spec/fixtures/config.yaml",
     "spec/spec_helper.rb",
     "spec/veslo_spec.rb",
     "veslo.gemspec"
@@ -35,7 +38,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/Wixpress/veslo"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.12"
   s.summary = "Command line Noah client"
 
   if s.respond_to? :specification_version then
