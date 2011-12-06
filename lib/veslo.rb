@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'mixlib/cli'
 require 'rest_client'
+require 'json'
 
 class Veslo
   include Mixlib::CLI
@@ -16,14 +17,15 @@ class Veslo
     argv = parse_options(arguments)
     @server = RestClient::Resource.new(config[:server_url], :headers => {:accept => "application/octet"})
     parse_commands(argv)
-    execute
+    send(:"resource_#{@method}")
   end
 
   def parse_commands(commands)
-    raise ArgumentError.new("Not the right ammount of arguments") if commands.size != 3
+    raise ArgumentError.new("Not the right ammount of arguments") unless (3..4).include?(commands.size)
     @resource = commands.shift
     @method = commands.shift
     @name = commands.shift
+    @file = commands.shift
     validate_input
   end
 
@@ -32,7 +34,7 @@ class Veslo
     raise NotImplementedError.new("resource #{@resource} not supported") unless SUPPORTED_RESOURCES.include?(@resource)
   end
 
-  def execute
+  def resource_get
     result = @server["#{@resource}/#{@name}"].get
     $stdout.puts result.to_str
     return 0
@@ -45,5 +47,17 @@ class Veslo
       $stderr.puts("Request failed with status: #{e.response.code}")
       return 2
     end
+  end
+
+  def resource_put
+    raise NotImplementedError, "No STDIN yet" unless @file
+    file_content = File.open(@file, 'r').read
+    put_data = "{\"format\":\"app/octet\", \"body\":#{file_content.to_json}}"
+    result = @server["#{@resource}/#{@name}"].put(put_data)
+    $stdout.puts "Config uploaded"
+    return 0
+  rescue Errno::ENOENT
+    $stderr.puts "File not found: #{@file}"
+    return 3
   end
 end
