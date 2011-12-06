@@ -8,6 +8,7 @@ source "http://rubygems.org"
 
 gem 'mixlib-cli'
 gem 'rest-client'
+gem 'json'
 
 group :development do
   gem "rdoc"
