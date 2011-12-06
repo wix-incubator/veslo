@@ -53,7 +53,7 @@ describe "Veslo", "interacting with server" do
     FakeWeb.register_uri(:get, "http://example.com/configurations/missing", :body => "Nothing to be found 'round here", :status => ["404", "Not Found"])
     FakeWeb.register_uri(:get, "http://example.com/configurations/error", :body => "Internal Server Error", :status => ["500", "Internal Server Error"])
 
-    FakeWeb.register_uri(:put, "http://example.com/configurations/creating", :body => "Hello World!")
+    # FakeWeb.register_uri(:put, "http://example.com/configurations/creating", :body => "Hello World!")
   end
 
   it "should get an existing configuration" do
