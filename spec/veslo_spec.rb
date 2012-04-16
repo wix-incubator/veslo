@@ -43,8 +43,31 @@ describe "Veslo", "parsing arguments" do
     lambda{@veslo.parse_commands(["foobars", "get", "baz"])}.should raise_error(NotImplementedError)
   end
 end
+describe "Veslo", "interacting with server as a library" do
+  before :all do
+    @veslo = Veslo.client("http://example.com")
+    FakeWeb.register_uri(:get, "http://example.com/configurations/existing", :body => "Hello World!")
+    FakeWeb.register_uri(:get, "http://example.com/configurations/missing", :body => "Nothing to be found 'round here", :status => ["404", "Not Found"])
+    FakeWeb.register_uri(:put, "http://example.com/configurations/creating", :body => "Hello World!")
+  end
 
-describe "Veslo", "interacting with server" do
+  it "should get the a existing configuration" do
+    @veslo.get("configurations", "existing").should == "Hello World!"
+  end
+
+  it "should not get the a missing configuration" do
+    lambda{ @veslo.get("configurations", "missing")}.should raise_error(RestClient::ResourceNotFound)
+  end
+
+  it "should upload a config" do
+    lambda{
+      @veslo.put("configurations", "existing", "{\"format\":\"app/octet\", \"body\":\"foo:\\n  bar: baz\\n  foobar: foobaz\\n\"}")
+    }.should raise_error(RestClient::Found) # REALLY?
+    FakeWeb.last_request.method.should == "PUT"
+    FakeWeb.last_request.body.should == "{\"format\":\"app/octet\", \"body\":\"foo:\\n  bar: baz\\n  foobar: foobaz\\n\"}"
+  end
+end
+describe "Veslo", "interacting with server from the comand line" do
   before :all do
     @veslo = Veslo.new
     @base_argv = ["-s", "http://example.com", "configurations"]
