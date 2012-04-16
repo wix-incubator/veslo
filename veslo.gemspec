@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "veslo"
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dimitri Krassovski"]
-  s.date = "2011-12-07"
+  s.date = "2012-04-16"
   s.description = "Command line utility to manage Noah configurations"
   s.email = "dimitri@wix.com"
   s.executables = ["veslo", "veslo"]
@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/Wixpress/veslo"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.21"
   s.summary = "Command line Noah client"
 
   if s.respond_to? :specification_version then
