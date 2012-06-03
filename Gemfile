@@ -10,6 +10,10 @@ gem 'mixlib-cli'
 gem 'rest-client'
 gem 'json'
 
+if defined?(JRUBY_VERSION)
+  gem 'jruby-openssl'
+end
+
 group :development do
   gem "rdoc"
   gem "fakeweb"

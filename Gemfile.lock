@@ -29,7 +29,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler
   fakeweb
   jeweler (~> 1.6.4)
   json
