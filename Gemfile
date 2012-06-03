@@ -14,6 +14,5 @@ group :development do
   gem "rdoc"
   gem "fakeweb"
   gem "rspec", "~> 2.7.0"
-  gem "bundler"
   gem "jeweler", "~> 1.6.4"
 end
