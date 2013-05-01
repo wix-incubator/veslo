@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/wix/veslo.png?branch=master)](https://travis-ci.org/wix/veslo)
+[![Code Climate](https://codeclimate.com/github/wix/veslo.png)](https://codeclimate.com/github/wix/veslo)
+
 # veslo
 
 _veslo (ru)_ -- paddle
