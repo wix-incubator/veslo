@@ -45,10 +45,12 @@ describe "Veslo", "parsing arguments" do
 end
 describe "Veslo", "interacting with server as a library" do
   before :all do
-    @veslo = Veslo.client("http://example.com")
+    FakeWeb.allow_net_connect = false
     FakeWeb.register_uri(:get, "http://example.com/configurations/existing", :body => "Hello World!")
+    FakeWeb.register_uri(:put, "http://example.com/configurations/existing", :body => "Hello World!")
     FakeWeb.register_uri(:get, "http://example.com/configurations/missing", :body => "Nothing to be found 'round here", :status => ["404", "Not Found"])
     FakeWeb.register_uri(:put, "http://example.com/configurations/creating", :body => "Hello World!")
+    @veslo = Veslo.client("http://example.com")
   end
 
   it "should get the a existing configuration" do
@@ -60,9 +62,7 @@ describe "Veslo", "interacting with server as a library" do
   end
 
   it "should upload a config" do
-    lambda{
-      @veslo.put("configurations", "existing", "{\"format\":\"app/octet\", \"body\":\"foo:\\n  bar: baz\\n  foobar: foobaz\\n\"}")
-    }.should raise_error(RestClient::Found) # REALLY?
+    @veslo.put("configurations", "existing", "{\"format\":\"app/octet\", \"body\":\"foo:\\n  bar: baz\\n  foobar: foobaz\\n\"}")
     FakeWeb.last_request.method.should == "PUT"
     FakeWeb.last_request.body.should == "{\"format\":\"app/octet\", \"body\":\"foo:\\n  bar: baz\\n  foobar: foobaz\\n\"}"
   end
