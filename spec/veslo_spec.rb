@@ -59,7 +59,7 @@ describe "Veslo", "interacting with server as a library" do
   end
 
   it "should delete the a existing configuration" do
-    @veslo.delete("configurations", "existing").should == "Bye World!"
+    @veslo.delete("configurations", "existing", {:foo => "bar"}).should == "Bye World!"
   end
 
   it "should not get the a missing configuration" do
