@@ -76,6 +76,16 @@ class Veslo
     @server["#{@resource}/#{@name}"].put(data)
   end
 
+  def delete(resource, name)
+    @resource = resource
+    @name = name
+    resource_delete
+  end
+
+  def resource_delete
+    @server["#{@resource}/#{@name}"].delete
+  end
+
   def resource_put_cli
     raise NotImplementedError, "No STDIN yet" unless @file
     file_content = File.open(@file, 'r').read

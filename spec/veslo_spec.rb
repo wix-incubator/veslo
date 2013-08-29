@@ -48,6 +48,7 @@ describe "Veslo", "interacting with server as a library" do
     FakeWeb.allow_net_connect = false
     FakeWeb.register_uri(:get, "http://example.com/configurations/existing", :body => "Hello World!")
     FakeWeb.register_uri(:put, "http://example.com/configurations/existing", :body => "Hello World!")
+    FakeWeb.register_uri(:delete, "http://example.com/configurations/existing", :body => "Bye World!")
     FakeWeb.register_uri(:get, "http://example.com/configurations/missing", :body => "Nothing to be found 'round here", :status => ["404", "Not Found"])
     FakeWeb.register_uri(:put, "http://example.com/configurations/creating", :body => "Hello World!")
     @veslo = Veslo.client("http://example.com")
@@ -55,6 +56,10 @@ describe "Veslo", "interacting with server as a library" do
 
   it "should get the a existing configuration" do
     @veslo.get("configurations", "existing").should == "Hello World!"
+  end
+
+  it "should delete the a existing configuration" do
+    @veslo.delete("configurations", "existing").should == "Bye World!"
   end
 
   it "should not get the a missing configuration" do
