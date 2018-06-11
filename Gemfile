@@ -7,7 +7,7 @@ source "http://rubygems.org"
 # Include everything needed to run rake, tests, features, etc.
 
 gem 'mixlib-cli'
-gem 'rest-client'
+gem 'rest-client', '>= 1.8.0'
 gem 'json'
 
 if defined?(JRUBY_VERSION)
