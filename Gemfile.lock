@@ -3,7 +3,8 @@ GEM
   specs:
     diff-lcs (1.1.3)
     fakeweb (1.3.0)
-    git (1.2.6)
+    git (1.6.0)
+      rchardet (~> 1.8)
     jeweler (1.6.4)
       bundler (~> 1.0)
       git (>= 1.2.5)
@@ -11,7 +12,8 @@ GEM
     json (1.8.0)
     mime-types (1.24)
     mixlib-cli (1.3.0)
-    rake (10.1.0)
+    rake (13.0.1)
+    rchardet (1.8.0)
     rdoc (4.0.1)
       json (~> 1.4)
     rest-client (1.6.7)
@@ -36,3 +38,6 @@ DEPENDENCIES
   rdoc
   rest-client
   rspec (~> 2.7.0)
+
+BUNDLED WITH
+   1.17.3
