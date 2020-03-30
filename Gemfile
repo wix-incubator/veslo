@@ -8,14 +8,14 @@ source "http://rubygems.org"
 
 gem 'mixlib-cli'
 gem 'rest-client'
-gem 'json'
+gem 'json', '>= 2.3.0'
 
 if defined?(JRUBY_VERSION)
   gem 'jruby-openssl'
 end
 
 group :development do
-  gem "rdoc"
+  gem "rdoc", ">= 4.3.0"
   gem "fakeweb"
   gem "rspec", "~> 2.7.0"
   gem "jeweler", "~> 1.6.4"
